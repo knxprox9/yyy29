@@ -576,6 +576,7 @@ const StyledWrapper = styled.div`
     padding: 0 20px; 
     margin-bottom: 8px; 
     position: relative;
+    overflow: visible;
   }
 
   .card .content .brand { 

@@ -44,37 +44,6 @@ const ProductCard = () => {
   const closeBtnRef = useRef(null);
   const contentRootRef = useRef(null);
 
-  // comet + counters
-  const [cometRun] = useState(true);
-  const [countersStart, setCountersStart] = useState(false);
-  const [counts, setCounts] = useState({ security: 0, speed: 0, trust: 0, quality: 0 });
-
-  useEffect(() => {
-    // بدء العدادات بعد مرور الشهاب
-    const t = setTimeout(() => setCountersStart(true), 2600);
-    return () => clearTimeout(t);
-  }, []);
-
-  useEffect(() => {
-    if (!countersStart) return;
-    const targets = { security: 10, speed: 100, trust: 10, quality: 10 };
-    const duration = 1200; // ms
-    const start = performance.now();
-    let raf;
-    const step = (now) => {
-      const p = Math.min(1, (now - start) / duration);
-      setCounts({
-        security: Math.round(p * targets.security),
-        speed: Math.round(p * targets.speed),
-        trust: Math.round(p * targets.trust),
-        quality: Math.round(p * targets.quality),
-      });
-      if (p < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [countersStart]);
-
   const openMini = useCallback(() => {
     setMiniOpen(true);
   }, []);
@@ -205,11 +174,6 @@ const ProductCard = () => {
           <div className="content">
             <div className="brand">بطائق إلكترونية مسبقة الدفع</div>
             <div className="product-name">بطاقة دفع رقمية جاهزة للاستخدام الفوري</div>
-
-            {/* طبقة الشهاب (يمر تحت النصوص) */}
-            <div className="comet-layer" aria-hidden="true">
-              <span className={`comet ${cometRun ? 'run' : ''}`} />
-            </div>
             
             {/* مؤشر التحميل */}
             <div className="loading-indicator">
@@ -283,22 +247,18 @@ const ProductCard = () => {
               <div className="trust-item" role="listitem" aria-label="أمان">
                 <span className="trust-icon" aria-hidden="true">🛡️</span>
                 <span className="trust-label">أمان</span>
-                <span className="trust-counter" aria-hidden="true">{counts.security}</span>
               </div>
               <div className="trust-item" role="listitem" aria-label="سرعة">
                 <span className="trust-icon" aria-hidden="true">⚡</span>
                 <span className="trust-label">سرعة</span>
-                <span className="trust-counter" aria-hidden="true">{counts.speed}</span>
               </div>
               <div className="trust-item" role="listitem" aria-label="ثقة">
                 <span className="trust-icon" aria-hidden="true">📈</span>
                 <span className="trust-label">ثقة</span>
-                <span className="trust-counter" aria-hidden="true">{counts.trust}</span>
               </div>
               <div className="trust-item" role="listitem" aria-label="جودة">
                 <span className="trust-icon" aria-hidden="true">🏅</span>
                 <span className="trust-label">جودة</span>
-                <span className="trust-counter" aria-hidden="true">{counts.quality}</span>
               </div>
             </div>
           </div>
@@ -575,13 +535,9 @@ const StyledWrapper = styled.div`
   .card .content { 
     padding: 0 20px; 
     margin-bottom: 8px; 
-    position: relative;
-    overflow: visible;
   }
 
   .card .content .brand { 
-    position: relative;
-    z-index: 2; 
     font-family: 'Tajawal', 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Cairo', sans-serif;
     font-weight: 800; 
     font-size: 0.94rem; 
@@ -601,61 +557,13 @@ const StyledWrapper = styled.div`
     font-weight: 600; 
     color: #111827; 
     font-size: 0.86rem; 
-    margin-bottom: 6px; 
+    margin-bottom: 16px; 
     text-align: right; 
     line-height: 1.55; 
     letter-spacing: 0.005em; 
     text-shadow: 0 0.5px 2px rgba(0, 0, 0, 0.05); 
     max-width: 100%;
     word-spacing: 0.08em; 
-  }
-
-  /* طبقة الشهاب */
-  .card .content .comet-layer {
-    position: relative;
-    height: 14px;
-    margin: 2px 0 10px 0;
-    overflow: visible;
-  }
-  .card .content .comet-layer .comet {
-    position: absolute;
-    top: 50%;
-    left: -12%;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #fef3c7; /* خفيف مائل للذهبي */
-    box-shadow: 0 0 8px rgba(251,191,36,0.95), 0 0 18px rgba(251,191,36,0.55);
-    transform: translate(-50%, -50%);
-    opacity: 0;
-  }
-  .card .content .comet-layer .comet::after{
-    content: '';
-    position: absolute;
-    right: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 80px; height: 3px;
-    background: linear-gradient(270deg, rgba(251,191,36,0) 0%, rgba(251,191,36,0.45) 30%, rgba(251,191,36,0.9) 60%, rgba(251,191,36,0) 100%);
-    filter: blur(1.2px);
-  }
-  .card .content .comet-layer .comet::before{
-    content: '';
-    position: absolute;
-    right: 100%; top: 50%;
-    transform: translateY(-50%);
-    width: 36px; height: 6px;
-    background: radial-gradient(closest-side, rgba(255,255,255,0.9), rgba(255,255,255,0));
-    filter: blur(3px);
-    opacity: .5;
-  }
-  .card .content .comet-layer .comet.run{
-    animation: comet-fly 2.6s cubic-bezier(0.22,0.61,0.36,1) 0.3s forwards;
-  }
-  @keyframes comet-fly {
-    0% { transform: translate(-10%, -50%); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translate(110%, -50%); opacity: 0; }
   }
 
   /* مؤشر التحميل */
@@ -697,7 +605,7 @@ const StyledWrapper = styled.div`
     margin-bottom: 1.5rem; 
   }
 
-  .card .content .color-size-container &gt; * { 
+  .card .content .color-size-container > * { 
     flex: 1; 
   }
 
@@ -834,15 +742,10 @@ const StyledWrapper = styled.div`
 
   /* شريط الثقة */
   .card .content .trust-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; align-items: center; padding: 0.1rem 0; margin: 0; font-family: 'Tajawal', 'IBM Plex Sans Arabic', 'Cairo', sans-serif; background: none; border: none; box-shadow: none; }
-  .card .content .trust-bar .trust-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 6px 4px; border-radius: 10px; min-height: 48px; }
+  .card .content .trust-bar .trust-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 6px 4px; border-radius: 10px; min-height: 44px; }
   .card .content .trust-bar .trust-item:focus-visible { outline: 2px solid #2563EB; outline-offset: 2px; }
   .card .content .trust-bar .trust-icon { font-size: 1rem; line-height: 1; transition: all 0.22s ease; }
   .card .content .trust-bar .trust-label { font-weight: 800; font-size: 0.62rem; color: #1f2937; letter-spacing: 0.01em; }
-  .card .content .trust-bar .trust-counter { font-weight: 800; font-size: 0.6rem; }
-  .card .content .trust-bar .trust-item[aria-label="أمان"] .trust-counter { color: #16a34a; }
-  .card .content .trust-bar .trust-item[aria-label="سرعة"] .trust-counter { color: #f59e0b; }
-  .card .content .trust-bar .trust-item[aria-label="ثقة"] .trust-counter { color: #3b82f6; }
-  .card .content .trust-bar .trust-item[aria-label="جودة"] .trust-counter { color: #a855f7; }
 
   /* شارة ثلاثية الأبعاد لعنصر ثقة */
   .card .content .trust-bar .trust-item[aria-label="ثقة"] .trust-icon-wrap {

@@ -155,7 +155,7 @@ const ProductCard = () => {
             <div className="mini-content">
               <div className="mini-payments">
                 <ul className="colors-container">
-                  {SERVICES.map(service =&gt; (
+                  {SERVICES.map(service => (
                     <ServiceItem key={service.id} service={service} showLabel={true} />
                   ))}
                 </ul>

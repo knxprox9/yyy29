@@ -249,7 +249,7 @@ const ProductCard = () => {
                 <span className="trust-label">أمان</span>
               </div>
               <div className="trust-item" role="listitem" aria-label="سرعة">
-                <span className="trust-icon" aria-hidden="true">⚡</span>
+                <span className="trust-icon" aria-hidden="true"><FiZap /></span>
                 <span className="trust-label">سرعة</span>
               </div>
               <div className="trust-item" role="listitem" aria-label="ثقة">

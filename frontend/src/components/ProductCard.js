@@ -257,7 +257,7 @@ const ProductCard = () => {
                 <span className="trust-label">ثقة</span>
               </div>
               <div className="trust-item" role="listitem" aria-label="جودة">
-                <span className="trust-icon" aria-hidden="true"><FiAward /></span>
+                <span className="trust-icon" aria-hidden="true">🏅</span>
                 <span className="trust-label">جودة</span>
               </div>
             </div>

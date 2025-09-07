@@ -579,6 +579,8 @@ const StyledWrapper = styled.div`
   }
 
   .card .content .brand { 
+    position: relative;
+    z-index: 2; 
     font-family: 'Tajawal', 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Cairo', sans-serif;
     font-weight: 800; 
     font-size: 0.94rem; 

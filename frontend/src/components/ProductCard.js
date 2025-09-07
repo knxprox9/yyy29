@@ -222,7 +222,7 @@ const ProductCard = () => {
             <div className="color-size-container">
               <div className="colors">
                 <ul className="colors-container">
-                  {SERVICES.slice(0, 4).map(service =&gt; (
+                  {SERVICES.slice(0, 4).map(service => (
                     <ServiceItem key={service.id} service={service} />
                   ))}
                 </ul>

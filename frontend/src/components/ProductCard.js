@@ -745,7 +745,7 @@ const StyledWrapper = styled.div`
   .card .content .trust-bar .trust-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 5px 3px; border-radius: 10px; min-height: 40px; }
   .card .content .trust-bar .trust-item:focus-visible { outline: 2px solid #2563EB; outline-offset: 2px; }
   .card .content .trust-bar .trust-icon { font-size: 0.9rem; line-height: 1; transition: all 0.22s ease; }
-  .card .content .trust-bar .trust-label { font-weight: 800; font-size: 0.62rem; color: #1f2937; letter-spacing: 0.01em; }
+  .card .content .trust-bar .trust-label { font-weight: 800; font-size: 0.58rem; color: #1f2937; letter-spacing: 0.01em; }
 
   /* شارة ثلاثية الأبعاد لعنصر ثقة */
   .card .content .trust-bar .trust-item[aria-label="ثقة"] .trust-icon-wrap {
